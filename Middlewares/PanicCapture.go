@@ -1,9 +1,9 @@
 package Middlewares
 
 import (
+	"github.com/br3akerX/martini/Response"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"martini/Response"
 	"net/http"
 )
 
