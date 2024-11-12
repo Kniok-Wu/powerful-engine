@@ -18,12 +18,12 @@ import (
 
 type Engine struct {
 	engine *gin.Engine
+	ctx    context.Context
+	cancel context.CancelFunc
 	logger *zap.Logger
 	db     *gorm.DB
 	ip     string
 	port   int
-	ctx    context.Context
-	cancel context.CancelFunc
 }
 
 type HandlerGroup struct {
@@ -147,4 +147,17 @@ func (e *Engine) Exec() {
 	if err := srv.Shutdown(e.ctx); err != nil {
 		e.logger.Error("服务器启动失败", zap.Error(err))
 	}
+}
+
+func (e *Engine) GetContext() context.Context {
+	return e.ctx
+}
+
+// Stop 发起engine退出信号 所有监听上下文的处理均停止
+func (e *Engine) Stop() {
+	e.cancel()
+}
+
+func (e *Engine) Done() <-chan struct{} {
+	return e.ctx.Done()
 }

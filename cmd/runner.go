@@ -3,9 +3,9 @@ package main
 import (
 	"github.com/br3akerX/clerk"
 	"github.com/br3akerX/clerk/pkg/encoder"
+	"github.com/br3akerX/martini/Engine"
+	"github.com/br3akerX/martini/Middlewares"
 	"github.com/gin-gonic/gin"
-	"martini/Engine"
-	"martini/Middlewares"
 	"net/http"
 	"os"
 )
@@ -14,6 +14,7 @@ func main() {
 	engine := Engine.NewEngine("127.0.0.1", 7980, nil)
 	engine.SetLogger(clerk.NewDefaultLogger(encoder.DefaultJsonEncoder(), os.Stdout))
 	engine.Use(
+		Middlewares.CancelListener(engine.GetContext()),
 		Middlewares.GenerateRequestId(),
 		Middlewares.SetLogger(engine.GetLogger()),
 		Middlewares.PanicCapture(),
