@@ -1,6 +1,7 @@
 package db
 
 import (
+	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -15,7 +16,7 @@ func NewSQLiteConn(dbPath string) (db *gorm.DB, err error) {
 
 // NewMySQLConn 新建立一个sqlite3的数据库链接
 func NewMySQLConn(dbPath string) (db *gorm.DB, err error) {
-	if db, err = gorm.Open(sqlite.Open(dbPath), &gorm.Config{}); err != nil {
+	if db, err = gorm.Open(mysql.Open(dbPath), &gorm.Config{}); err != nil {
 		return nil, err
 	}
 	return db, nil
