@@ -1,4 +1,4 @@
-module martini
+module github.com/br3akerX/martini
 
 go 1.23.0
 
